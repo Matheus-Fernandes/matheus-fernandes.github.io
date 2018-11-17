@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mensagem Importante</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <script>
         var refreshIntervalId;
 
@@ -21,7 +23,13 @@
                 mensagem = "Caian, cara de pastel!";
 
             if (quem === 'CRIS')
-                mensagem = "Sogra vc é demais!";
+                mensagem = "Sogra, vc é demais!";
+
+            if (quem === 'PAPAI')
+                mensagem = "Papai, eu te amo!";
+
+            if (quem === 'MAMAE')
+                mensagem = "Mamãe, eu te amo!";
 
             var divMensagem = document.getElementById("mensagem");
             divMensagem.innerHTML = "";
@@ -34,16 +42,36 @@
             }, 400);
         }
     </script>
+    <style>
+        *{            
+            font-family: 'Indie Flower', cursive;
+            background-color: #e8ecf1;            
+        }
+        span{
+            font-size: 20pt;
+            color:#d64541;
+        }
+        h1{
+            color:#336e7b;
+        }
+
+        a{
+            font-size: 20pt;
+            color: #1f3a93;
+        }
+    </style>
 </head>
 <body>
     <div id="app" style="text-align: center">
-        <strong>Quem é vc?</strong>
-        <a href="#mensagem" onclick="darMensagem('MIH')">Michelle</a>
-        <a href="#mensagem" onclick="darMensagem('CAIO')">Caio</a>
-        <a href="#mensagem" onclick="darMensagem('CAIAN')">Caian</a>
-        <a href="#mensagem" onclick="darMensagem('CRIS')">Cristiane</a>        
+        <h1>Quem é vc?</h1>
+        <a href="#" onclick="darMensagem('MIH')">Michelle</a>
+        <a href="#" onclick="darMensagem('CAIO')">Caio</a>
+        <a href="#" onclick="darMensagem('CAIAN')">Caian</a>
+        <a href="#" onclick="darMensagem('CRIS')">Cristiane</a>        
+        <a href="#" onclick="darMensagem('MAMAE')">Mamãe</a>        
+        <a href="#" onclick="darMensagem('PAPAI')">Papai</a>        
 
-        <div id="mensagem" style="margin-top: 10px"></div>
+        <div id="mensagem" style="margin-top: 20px"></div>
     </div>
 </body>
 </html>
