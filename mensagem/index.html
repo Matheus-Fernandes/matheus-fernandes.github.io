@@ -31,6 +31,12 @@
             if (quem === 'MAMAE')
                 mensagem = "Mamãe, eu te amo!";
 
+            if (quem === 'VORITA')
+                mensagem = "Vó, um abraço bem apertado!"
+
+            if (quem === "THATA")
+                mensagem = "Thata, minha fofinha!"
+
             var divMensagem = document.getElementById("mensagem");
             divMensagem.innerHTML = "";
 
@@ -40,7 +46,7 @@
             refreshIntervalId = setInterval(() => {
                 divMensagem.innerHTML += `<span>${mensagem}</span><br>`;
             }, 400);
-        }
+        }        
     </script>
     <style>
         *{            
@@ -68,8 +74,11 @@
         <a href="#" onclick="darMensagem('CAIO')">Caio</a>
         <a href="#" onclick="darMensagem('CAIAN')">Caian</a>
         <a href="#" onclick="darMensagem('CRIS')">Cristiane</a>        
+        <a href="#" onclick="darMensagem('VORITA')">Vó Rita</a> 
         <a href="#" onclick="darMensagem('MAMAE')">Mamãe</a>        
-        <a href="#" onclick="darMensagem('PAPAI')">Papai</a>        
+        <a href="#" onclick="darMensagem('PAPAI')">Papai</a>
+        <a href="#" onclick="darMensagem('THATA')">Thalita</a>
+        
 
         <div id="mensagem" style="margin-top: 20px"></div>
     </div>
