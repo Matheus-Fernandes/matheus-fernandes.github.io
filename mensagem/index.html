@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mensagem Importante</title>
+    <script>
+        var refreshIntervalId;
+
+        function darMensagem(quem){
+            var mensagem = "";
+
+            if(quem === 'MIH')
+                mensagem = "Michelle, eu te amo!";
+
+            if(quem === 'CAIO')
+                mensagem = "Caio, cara de pastel!";
+
+            if (quem === 'CAIAN')
+                mensagem = "Caian, cara de pastel!";
+
+            if (quem === 'CRIS')
+                mensagem = "Sogra vc é demais!";
+
+            var divMensagem = document.getElementById("mensagem");
+            divMensagem.innerHTML = "";
+
+            if (refreshIntervalId)
+                clearInterval(refreshIntervalId);
+
+            refreshIntervalId = setInterval(() => {
+                divMensagem.innerHTML += `<span>${mensagem}</span><br>`;
+            }, 400);
+        }
+    </script>
+</head>
+<body>
+    <div id="app" style="text-align: center">
+        <strong>Quem é vc?</strong>
+        <a href="#mensagem" onclick="darMensagem('MIH')">Michelle</a>
+        <a href="#mensagem" onclick="darMensagem('CAIO')">Caio</a>
+        <a href="#mensagem" onclick="darMensagem('CAIAN')">Caian</a>
+        <a href="#mensagem" onclick="darMensagem('CRIS')">Cristiane</a>        
+
+        <div id="mensagem" style="margin-top: 10px"></div>
+    </div>
+</body>
+</html>
