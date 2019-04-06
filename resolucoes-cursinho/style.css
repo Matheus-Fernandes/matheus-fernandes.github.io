@@ -2,8 +2,11 @@
 
 li {
     padding-top:16px;
-    margin-left: -40px;
     list-style-type: none;
+}
+
+ul {
+    padding: 0;
 }
 
 a {
