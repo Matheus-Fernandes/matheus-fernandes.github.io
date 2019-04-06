@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
 
 li {
-    padding:16px;
+    padding-top:16px;
+    padding-bottom:16px;
     list-style-type: none;
 }
 
