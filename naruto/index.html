@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Naruto Shippuden</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Anton&display=swap');
+        body{
+            background-color: #ecf0f1
+        }
+        a{
+            font-size: 25pt;
+            font-family: 'Anton', sans-serif;
+            color: #d35400;
+
+        }
+        a:visited{
+            color:#2980b9 
+        }
+        ul{
+            list-style-type: none;
+        }
+        ul li{
+            margin: 20pt
+        }
+    </style>
+    <script type="text/javascript">
+        function onLoad(){
+            setTimeout(
+            function(){ 
+                var i = localStorage.getItem("episodio");
+                console.log(i);
+                document.getElementById("l" + i).focus();
+                document.getElementById("l" + i).scrollIntoView(); 
+            }, 10);            
+        }
+    </script>
+</head>
+<body onload="onLoad()">
+    <center>
+        <ul>
+            <script>
+                function onClick(i){
+                    localStorage.setItem("episodio", i);                
+                }
+        
+                for (var i = 1; i <= 500; i++){
+                    var aux = i + "";
+                    if (aux.length === 1){
+                        aux = "0" + aux;
+                    }
+
+                    document.write(`<li><a id='l${i}' onclick='onClick(${i})' href='https://ns569461.ip-51-79-82.net/N/naruto-shippuden/${aux}.mp4'>EPISÓDIO ${i}</a></li>`)
+                }                    
+            </script>        
+        </ul>
+    </center>
+</body>
+
+</html>
