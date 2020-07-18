@@ -1,0 +1,180 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        
+        <canvas id="canvas" style="display: none" width="260" height="260" style="border:1px solid #d3d3d3;">
+        </canvas>
+        <br/> <br/> <br/>
+        <input id="btnIniciar" type="button" value="Iniciar" onclick="clickIniciar()"/>
+        <script>
+            // canvas e cores
+            var c = document.getElementById("canvas");
+            var ctx = c.getContext("2d");
+            var previousColor = {c: 0, m: 0, y: 0, k: 100};
+            var canPlay = false;
+
+            // geradores de sons
+            var context, o1, o2, o3, g1, g2, g3;
+
+            function clickIniciar(){
+                document.getElementById("canvas").style.display = "block";
+                configureSound();
+                document.getElementById("btnIniciar").style.display = "none";
+            }
+
+            function play(event){
+                canPlay = true;
+                pick(event);
+            }
+
+            function configureSound(){
+                context = new AudioContext()
+
+                o1 = context.createOscillator()
+                g1 = context.createGain()
+                
+                o1.connect(g1)
+                g1.connect(context.destination)
+                o1.frequency.value = 261.6  // C 4 - Yellow
+                g1.gain.value = 0
+                o1.start()
+
+                o2 = context.createOscillator()
+                g2 = context.createGain()
+                
+                o2.connect(g2)
+                g2.connect(context.destination)
+                o2.frequency.value = 311.1	// D# 4 - Cyan
+                g2.gain.value = 0
+                o2.start()
+
+                o3 = context.createOscillator()
+                g3 = context.createGain()
+            
+                o3.connect(g3)
+                g3.connect(context.destination)
+                o3.frequency.value = 392.0  // G 4 - Magenta
+                g3.gain.value = 0
+                o3.start()
+            }
+
+    
+            window.onload = function() {                
+                
+                ctx.fillStyle = getRandomColour();
+                ctx.fillRect(60,60,140,140);
+
+                ctx.fillStyle = getRandomColour();
+                ctx.fillRect(10,10,100,100);
+
+                ctx.fillStyle = getRandomColour();
+                ctx.fillRect(10, 150 ,100,100);
+
+                ctx.fillStyle = getRandomColour();
+                ctx.fillRect(150,10,100,100);
+
+                ctx.fillStyle = getRandomColour();
+                ctx.fillRect(150, 150 ,100,100);
+            }
+
+            function getRandomColour(){
+                var red = Math.floor(Math.random()* 255);
+                var green = Math.floor(Math.random() * 255);
+                var blue = Math.floor(Math.random() * 255);
+
+                return "rgb("+red+","+green+"," +blue+" )";  
+            }
+
+           var rgb2cmyk = function(r, g, b, normalized){
+                var c = 1 - (r / 255);
+                var m = 1 - (g / 255);
+                var y = 1 - (b / 255);
+                var k = Math.min(c, Math.min(m, y));
+                
+                c = (c - k) / (1 - k);
+                m = (m - k) / (1 - k);
+                y = (y - k) / (1 - k);
+                
+                if(!normalized){
+                    c = Math.round(c * 10000) / 100;
+                    m = Math.round(m * 10000) / 100;
+                    y = Math.round(y * 10000) / 100;
+                    k = Math.round(k * 10000) / 100;
+                }
+                
+                c = isNaN(c) ? 0 : c;
+                m = isNaN(m) ? 0 : m;
+                y = isNaN(y) ? 0 : y;
+                k = isNaN(k) ? 0 : k;
+                
+                return {
+                    c: c,
+                    m: m,
+                    y: y,
+                    k: k
+                }
+            }
+
+            function pick(event) {
+                var x = event.layerX;
+                var y = event.layerY;
+                var pixel = ctx.getImageData(x, y, 1, 1);
+                var data = pixel.data;
+                var rgba = 'rgba(' + data[0] + ', ' + data[1] +
+                        ', ' + data[2] + ', ' + (data[3] / 255) + ')';
+             
+                var cmky = rgb2cmyk(data[0], data[1], data[2], (data[3] / 255));
+ 
+                playSound(cmky);
+
+                previousColor = cmky;
+            }
+
+            function playSound(cmky){
+                if (canPlay){        
+                    var percentage = (100 - cmky.k)/100;
+
+                    var vg1 = cmky.y * percentage;
+                    var vg2 = cmky.c * percentage;
+                    var vg3 = cmky.m * percentage;
+
+                    g1.gain.value = vg1;
+                    g2.gain.value = vg2;
+                    g3.gain.value = vg3;
+
+                  /*  if ( g2.gain.value  != vg2 || g1.gain.value != vg1 || g3.gain.value != vg3){
+                        console.log(vg1)
+                        console.log(g1.gain.value)
+                        g1.gain.value = vg1;
+                        g2.gain.value = vg2;
+                        g3.gain.value = vg3;
+                    }  */              
+                }
+            }
+
+            function stop(){                
+                g1.gain.exponentialRampToValueAtTime(
+                 0.00001, context.currentTime + 1
+                )
+                g2.gain.exponentialRampToValueAtTime(
+                 0.00001, context.currentTime + 1
+                )
+                g3.gain.exponentialRampToValueAtTime(
+                 0.00001, context.currentTime + 1
+                )
+                canPlay = false;
+            }
+
+            c.addEventListener('mousedown', play);
+            c.addEventListener('mouseup', stop);
+            c.addEventListener('mousemove', pick);
+
+            c.addEventListener('touchstart', play);
+            c.addEventListener('touchend', stop);
+            c.addEventListener('touchcancel', stop);
+            c.addEventListener('touchmove', pick);
+        </script>
+    </body>
+</html>
